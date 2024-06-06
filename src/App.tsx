@@ -1,33 +1,32 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
+import { createContext, useState } from 'react';
+import Layout from './components/Layout';
+
+export const DrawerContext = createContext<{
+  drawerOpen: boolean;
+  setDrawerOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}>(
+  null as unknown as {
+    drawerOpen: boolean;
+    setDrawerOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  }
+);
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <DrawerContext.Provider
+      value={{
+        drawerOpen,
+        setDrawerOpen,
+      }}
+    >
+      <Layout>
+        {Array.from({ length: 100 }, () => {
+          return <p>lorem</p>;
+        })}
+      </Layout>
+    </DrawerContext.Provider>
   );
 }
 
